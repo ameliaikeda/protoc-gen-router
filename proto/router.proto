@@ -1,0 +1,30 @@
+syntax = "proto3";
+package routerproto;
+
+import "google/protobuf/descriptor.proto";
+
+option go_package = "github.com/ameliaikeda/protoc-gen-router/proto;routerproto";
+
+message RPCHandler {
+    string path = 1;
+    string method = 2;
+}
+
+extend google.protobuf.MethodOptions {
+    RPCHandler handler = 50000;
+}
+
+message ServiceRouter {
+    string name = 1;
+    string service_type = 2;
+    Protocol protocol = 3;
+}
+
+enum Protocol {
+    HTTP = 0;
+    HTTPS = 1;
+}
+
+extend google.protobuf.ServiceOptions {
+    ServiceRouter router = 60000;
+}
